@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AESC</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Define custom color palette as CSS variables */
+        :root {
+            --primary: #476349;
+            --background: #edf3ed;
+            --accent1: #91a291;
+            --accent2: #b4c2b4;
+            --text-primary: #74907c;
+            --text-secondary: #7c847c;
+            --accent3: #beccbf;
+            --accent4: #7c8c74;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        /* Apply base font and background color */
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--background);
+            color: #333;
+        }
+
+        /* Styles for the active nav link */
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Custom button styles using the palette */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            /* py-3 px-6 */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            font-size: 1.125rem;
+            /* text-lg */
+            line-height: 1.75rem;
+            /* text-lg */
+            font-weight: 600;
+            /* font-semibold */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            /* shadow-md */
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-0.25rem);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--accent4);
+            color: white;
+        }
+    </style>
+
+    <script>
+        // Set up Tailwind CSS to use our custom colors and font
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#476349',
+                        background: '#edf3ed',
+                        accent1: '#91a291',
+                        accent2: '#b4c2b4',
+                        'text-primary': '#74907c',
+                        'text-secondary': '#7c847c',
+                        accent3: '#beccbf',
+                        accent4: '#7c8c74',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+
+<body class="bg-background min-h-screen flex flex-col">
+
+    <!-- Header & Navigation Bar -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo/Brand Name -->
+            <a href="index.html" class="text-2xl font-bold text-primary">
+                AESC (Admin)
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+
+            <!-- Navigation Links -->
+            <div id="nav-links" class="hidden md:flex md:items-center md:space-x-6">
+                <a href="#" class="nav-link text-text-primary hover:text-primary active">Dashboard</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary">Manage Mentors</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary">Manage Parents</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary">Manage Events</a>
+                <a href="index.html"
+                    class="ml-4 px-5 py-2 bg-accent4 text-white rounded-lg font-medium hover:bg-opacity-90 transition-colors">Log
+                    Out</a>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
+            <a href="#" class="block nav-link text-text-primary hover:text-primary active">Dashboard</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary">Manage Mentors</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary">Manage Parents</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary">Manage Events</a>
+            <a href="index.html"
+                class="block w-full text-center mt-2 px-5 py-2 bg-accent4 text-white rounded-lg font-medium hover:bg-opacity-90 transition-colors">Log
+                Out</a>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto px-6 py-12 flex-grow">
+
+        <h1 class="text-4xl font-bold text-primary mb-8">Admin Dashboard</h1>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-2xl font-semibold text-accent4 mb-3">Pending Applications</h3>
+                <p class="text-text-secondary mb-4">
+                    <span class="text-4xl font-bold text-primary">5</span> new mentor applications.<br>
+                    <span class="text-4xl font-bold text-primary">2</span> new child registrations.
+                </p>
+                <a href="#" class="text-primary font-semibold hover:underline">Review Applications &rarr;</a>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-2xl font-semibold text-accent4 mb-3">Club Statistics</h3>
+                <p class="text-text-secondary mb-4">
+                    <strong>Total Mentors:</strong> 45<br>
+                    <strong>Total Children:</strong> 38<br>
+                    <strong>Active Matches:</strong> 35
+                </p>
+                <a href="#" class="text-primary font-semibold hover:underline">View Full Report &rarr;</a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-2xl font-semibold text-accent4 mb-3">Manage Events</h3>
+                <p class="text-text-secondary mb-4">
+                    <strong>Next Event:</strong> Sensory-Friendly Craft Day<br>
+                    <strong>Attendees:</strong> 42 registered
+                </p>
+                <a href="#" class="text-primary font-semibold hover:underline">Create/Edit Events &rarr;</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-background mt-16">
+        <div class="container mx-auto px-6 py-10 text-center text-accent2">
+            &copy; 2025 Autism Educational Support Club. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+
+</html>

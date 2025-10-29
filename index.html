@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AESC</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Define custom color palette as CSS variables */
+        :root {
+            --primary: #476349;
+            --background: #edf3ed;
+            --accent1: #91a291;
+            --accent2: #b4c2b4;
+            --text-primary: #74907c;
+            --text-secondary: #7c847c;
+            --accent3: #beccbf;
+            --accent4: #7c8c74;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        /* Apply base font and background color */
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--background);
+            color: #333;
+        }
+
+        /* Helper class for transitions */
+        .section {
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        /* Styles for the active nav link */
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        /* Custom button styles using the palette */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            /* py-3 px-6 */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            font-size: 1.125rem;
+            /* text-lg */
+            line-height: 1.75rem;
+            /* text-lg */
+            font-weight: 600;
+            /* font-semibold */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            /* shadow-md */
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+            /* Ensure text is centered */
+        }
+
+        .btn:hover {
+            transform: translateY(-0.25rem);
+            /* hover:-translate-y-1 */
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            /* A slightly transparent version of --primary */
+            background-color: #476349e6;
+            /* 90% opacity */
+        }
+
+        .btn-secondary {
+            background-color: var(--accent4);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            /* A slightly transparent version of --accent4 */
+            background-color: #7c8c74e6;
+            /* 90% opacity */
+        }
+
+        /* Custom card styles */
+        .info-card {
+            @apply bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-2xl;
+        }
+
+        /* Form input styling */
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            /* py-3 px-4 */
+            border: 1px solid var(--primary);
+            /* border border-primary */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            background-color: #ffffff;
+            /* bg-white */
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .form-input:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary);
+            /* ring-2 ring-primary */
+        }
+
+
+        .form-label {
+            @apply block mb-2 text-sm font-medium text-primary;
+            /* Changed label color to primary (darkest) */
+        }
+
+        /* Login tab styling */
+        .login-tab {
+            @apply px-4 py-3 font-medium text-center text-gray-600 cursor-pointer rounded-t-lg;
+        }
+
+        .login-tab.active {
+            @apply text-primary border-b-2 border-primary;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+    </style>
+
+    <script>
+        // Set up Tailwind CSS to use our custom colors and font
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#476349',
+                        background: '#edf3ed',
+                        accent1: '#91a291',
+                        accent2: '#b4c2b4',
+                        'text-primary': '#74907c',
+                        'text-secondary': '#7c847c',
+                        accent3: '#beccbf',
+                        accent4: '#7c8c74',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+
+<body class="bg-background min-h-screen flex flex-col">
+
+    <!-- Header & Navigation Bar -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo/Brand Name -->
+            <a href="#" class="text-2xl font-bold text-primary" data-page="home">
+                Autism Educational Support Club
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+
+            <!-- Navigation Links -->
+            <div id="nav-links" class="hidden md:flex md:items-center md:space-x-6">
+                <a href="#" class="nav-link text-text-primary hover:text-primary active" data-page="home">Home</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="events">Events</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="mentor-register">Become a
+                    Mentor</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="parent-register">Register
+                    Your Child</a>
+                <a href="#"
+                    class="ml-4 px-5 py-2 bg-primary text-white rounded-lg font-medium hover:bg-opacity-90 transition-colors"
+                    data-page="login">Log In</a>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
+            <a href="#" class="block nav-link text-text-primary hover:text-primary active" data-page="home">Home</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary" data-page="events">Events</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary" data-page="mentor-register">Become a
+                Mentor</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary" data-page="parent-register">Register
+                Your Child</a>
+            <a href="#"
+                class="block w-full text-center mt-2 px-5 py-2 bg-primary text-white rounded-lg font-medium hover:bg-opacity-90 transition-colors"
+                data-page="login">Log In</a>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto px-6 py-12 flex-grow">
+
+        <!-- Page: Home -->
+        <section id="page-home" class="section">
+            <!-- Hero Section -->
+            <div class="bg-white rounded-xl shadow-xl overflow-hidden md:flex mb-16">
+                <div class="md:w-1/2 p-8 lg:p-16 flex flex-col justify-center">
+                    <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+                        Building Bridges, Creating Connections
+                    </h1>
+                    <p class="text-xl text-text-secondary mb-8">
+                        Welcome to the Autism Educational Support Club at the University of Toronto. We connect
+                        passionate mentors with children in the autism community.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="btn btn-primary" data-page="mentor-register">Join as a Mentor</a>
+                        <a href="#" class="btn btn-secondary" data-page="parent-register">Register a Child</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 h-64 md:h-auto">
+                    <!-- Placeholder for an image -->
+                    <img class="w-full h-full object-cover"
+                        src="https://placehold.co/800x600/476349/edf3ed?text=AESC+UofT"
+                        alt="Group of students and children playing">
+                </div>
+            </div>
+
+            <!-- What We Do Section -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-primary mb-4">What We Do</h2>
+                <p class="text-lg text-text-secondary max-w-3xl mx-auto mb-8">
+                    Our mission is to provide personalized support and create inclusive, engaging experiences for
+                    children with autism, while offering UofT students meaningful volunteer opportunities.
+                </p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div class="info-card p-8">
+                        <h3 class="text-2xl font-semibold text-accent4 mb-3">1-on-1 Mentorship</h3>
+                        <p class="text-text-secondary">
+                            We pair UofT student mentors with children to build supportive friendships, focusing on
+                            shared interests and goals.
+                        </p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="info-card p-8">
+                        <h3 class="text-2xl font-semibold text-accent4 mb-3">Group Events</h3>
+                        <p class="text-text-secondary">
+                            From sensory-friendly craft sessions to inclusive sports days, we host events that are fun
+                            for the whole family.
+                        </p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="info-card p-8">
+                        <h3 class="text-2xl font-semibold text-accent4 mb-3">Community Support</h3>
+                        <p class="text-text-secondary">
+                            We aim to build a strong community for parents, mentors, and children, offering resources
+                            and a network of support.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Us Section (Merged from About Page) -->
+            <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-xl mt-16">
+                <h2 id="about-us-section" class="text-3xl font-bold text-primary mb-6 text-center">About Our Club</h2>
+                <img class="w-full h-64 object-cover rounded-lg mb-8"
+                    src="https://placehold.co/1000x400/74907c/edf3ed?text=Our+Team" alt="AESC Team">
+
+                <div class="prose prose-lg max-w-none text-text-secondary">
+                    <p>
+                        Founded in 2023, the Autism Educational Support Club (AESC) at the University of Toronto is a
+                        student-run organization dedicated to bridging the gap between the UofT community and the local
+                        autism community. We believe in the power of connection, support, and education to make a
+                        meaningful difference.
+                    </p>
+                    <h3 class="text-2xl font-semibold text-primary mt-8 mb-4">Our Mission</h3>
+                    <p>
+                        Our mission is twofold:
+                    </p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li>To provide children with autism spectrum disorder (ASD) with dedicated mentors who support
+                            their social, educational, and personal growth.</li>
+                        <li>To offer University of Toronto students invaluable volunteer experience, fostering empathy,
+                            leadership, and a deep understanding of neurodiversity.</li>
+                    </ul>
+                    <h3 class="text-2xl font-semibold text-primary mt-8 mb-4">Our Vision</h3>
+                    <p>
+                        We envision a community where every child with autism has the opportunity to thrive, supported
+                        by a network of compassionate and dedicated individuals. We strive to create an inclusive
+                        environment at UofT and beyond, where neurodiversity is celebrated.
+                    </p>
+                    <h3 class="text-2xl font-semibold text-primary mt-8 mb-4">Meet the Team</h3>
+                    <p>
+                        Our executive team is composed of passionate students from diverse faculties, all united by a
+                        common goal.
+                    </p>
+
+                    <!-- Member Profiles Grid -->
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 not-prose">
+                        <!-- Profile Card 1 -->
+                        <div class="text-center">
+                            <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover bg-accent2"
+                                src="https://placehold.co/200x200/91a291/edf3ed?text=Profile" alt="Profile picture">
+                            <h4 class="text-xl font-semibold text-primary">Jane Doe</h4>
+                            <p class="text-accent4 font-medium">President</p>
+                            <p class="text-text-secondary text-sm mt-2">Leads the club's overall strategy and
+                                operations. Passionate about community building.</p>
+                        </div>
+                        <!-- Profile Card 2 -->
+                        <div class="text-center">
+                            <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover bg-accent2"
+                                src="https://placehold.co/200x200/7c8c74/edf3ed?text=Profile" alt="Profile picture">
+                            <h4 class="text-xl font-semibold text-primary">John Smith</h4>
+                            <p class="text-accent4 font-medium">VP Mentorship</p>
+                            <p class="text-text-secondary text-sm mt-2">Manages mentor recruitment, training, and
+                                matching with families.</p>
+                        </div>
+                        <!-- Profile Card 3 -->
+                        <div class="text-center">
+                            <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover bg-accent2"
+                                src="https://placehold.co/200x200/b4c2b4/476349?text=Profile" alt="Profile picture">
+                            <h4 class="text-xl font-semibold text-primary">Alex Chen</h4>
+                            <p class="text-accent4 font-medium">VP Events</p>
+                            <p class="text-text-secondary text-sm mt-2">Organizes all our fun and inclusive events for
+                                mentors and children.</p>
+                        </div>
+                    </div>
+                    <!-- End Member Profiles Grid -->
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Page: About Us (This is the old, hidden one, which is fine to keep as the navigation logic hides it) -->
+        <section id="page-about" class="section hidden">
+            <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-xl">
+                <h2 class="text-4xl font-bold text-primary mb-6 text-center">About Our Club</h2>
+                <img class="w-full h-64 object-cover rounded-lg mb-8"
+                    src="https://placehold.co/1000x400/74907c/edf3ed?text=Our+Team" alt="AESC Team">
+
+                <div class="prose prose-lg max-w-none text-text-secondary">
+                    <p>
+                        Founded in 2023, the Autism Educational Support Club (AESC) at the University of Toronto is a
+                        student-run organization dedicated to bridging the gap between the UofT community and the local
+                        autism community. We believe in the power of connection, support, and education to make a
+                        meaningful difference.
+                    </p>
+                    <h3 class="text-2xl font-semibold text-primary mt-8 mb-4">Our Mission</h3>
+                    <p>
+                        Our mission is twofold:
+                    </p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li>To provide children with autism spectrum disorder (ASD) with dedicated mentors who support
+                            their social, educational, and personal growth.</li>
+                        <li>To offer University of Toronto students invaluable volunteer experience, fostering empathy,
+                            leadership, and a deep understanding of neurodiversity.</li>
+                    </ul>
+                    <h3 class="text-2xl font-semibold text-primary mt-8 mb-4">Our Vision</h3>
+                    <p>
+                        We envision a community where every child with autism has the opportunity to thrive, supported
+                        by a network of compassionate and dedicated individuals. We strive to create an inclusive
+                        environment at UofT and beyond, where neurodiversity is celebrated.
+                    </p>
+                    <h3 class="text-2xl font-semibold text-primary mt-8 mb-4">Meet the Team</h3>
+                    <p>
+                        Our executive team is composed of passionate students from diverse faculties, all united by a
+                        common goal. (A future section here could include photos and bios of the exec team).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page: Events -->
+        <section id="page-events" class="section hidden">
+            <h2 class="text-4xl font-bold text-primary mb-8 text-center">Upcoming Events</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Event Card 1 -->
+                <div class="info-card">
+                    <img class="w-full h-48 object-cover"
+                        src="https://placehold.co/600x400/b4c2b4/476349?text=Craft+Day" alt="Crafts">
+                    <div class="p-6">
+                        <p class="text-sm text-accent4 font-medium">NOV 15, 2025 | 2:00 PM - 4:00 PM</p>
+                        <h3 class="text-2xl font-semibold text-primary my-2">Sensory-Friendly Craft Day</h3>
+                        <p class="text-text-secondary mb-4">Join us for a fun afternoon of sensory-friendly crafts! All
+                            materials provided. Open to all ages.</p>
+                        <span
+                            class="inline-block bg-accent3 text-accent4 px-3 py-1 rounded-full text-sm font-semibold">Location:
+                            Sidney Smith Hall, Rm 100</span>
+                    </div>
+                </div>
+
+                <!-- Event Card 2 -->
+                <div class="info-card">
+                    <img class="w-full h-48 object-cover"
+                        src="https://placehold.co/600x400/91a291/edf3ed?text=Park+Meetup" alt="Park">
+                    <div class="p-6">
+                        <p class="text-sm text-accent4 font-medium">NOV 22, 2025 | 1:00 PM - 3:00 PM</p>
+                        <h3 class="text-2xl font-semibold text-primary my-2">Autumn Park Meetup</h3>
+                        <p class="text-text-secondary mb-4">Let's enjoy the fall weather! A casual meetup for mentors,
+                            children, and families at Queen's Park.</p>
+                        <span
+                            class="inline-block bg-accent3 text-accent4 px-3 py-1 rounded-full text-sm font-semibold">Location:
+                            Queen's Park North</span>
+                    </div>
+                </div>
+
+                <!-- Event Card 3 -->
+                <div class="info-card">
+                    <img class="w-full h-48 object-cover"
+                        src="https://placehold.co/600x400/7c8c74/white?text=Info+Session" alt="Info Session">
+                    <div class="p-6">
+                        <p class="text-sm text-accent4 font-medium">DEC 01, 2025 | 6:00 PM - 7:00 PM</p>
+                        <h3 class="text-2xl font-semibold text-primary my-2">Mentor Info Session (Online)</h3>
+                        <p class="text-text-secondary mb-4">Interested in becoming a mentor for the winter term? Join
+                            our Zoom info session to learn more!</p>
+                        <span
+                            class="inline-block bg-accent3 text-accent4 px-3 py-1 rounded-full text-sm font-semibold">Location:
+                            Zoom (Link TBD)</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Page: Mentor Registration -->
+        <section id="page-mentor-register" class="section hidden">
+            <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-xl">
+                <h2 class="text-3xl font-bold text-primary mb-6 text-center">Become a Mentor</h2>
+                <p class="text-center text-primary mb-8">
+                    We're excited to have you join our team! Please fill out the form below to get started. All mentors
+                    must complete a screening and training process.
+                </p>
+                <form id="mentor-reg-form" class="space-y-10">
+
+                    <fieldset>
+                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Personal
+                            Information</legend>
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="mentor-first-name" class="form-label">First Name</label>
+                                    <input type="text" id="mentor-first-name" class="form-input" required>
+                                </div>
+                                <div>
+                                    <label for="mentor-last-name" class="form-label">Last Name</label>
+                                    <input type="text" id="mentor-last-name" class="form-input" required>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="mentor-age" class="form-label">Age</label>
+                                    <input type="number" id="mentor-age" class="form-input" min="18" max="99" required>
+                                </div>
+                                <div>
+                                    <label for="mentor-gender" class="form-label">Gender</label>
+                                    <select id="mentor-gender" class="form-input">
+                                        <option value="">Select...</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="non-binary">Non-binary</option>
+                                        <option value="prefer-not-to-say">Prefer not to say</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="mentor-phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="mentor-phone" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="mentor-personal-email" class="form-label">Personal Email Address</label>
+                                <input type="email" id="mentor-personal-email" class="form-input"
+                                    placeholder="you@example.com" required>
+                            </div>
+                            <div>
+                                <label for="mentor-address" class="form-label">Address</label>
+                                <input type="text" id="mentor-address" class="form-input" required>
+                            </div>
+                        </div>
+                    </fieldset>
+
+
+                    <fieldset>
+                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">University
+                            Information</legend>
+                        <div class="space-y-6">
+                            <div>
+                                <label for="mentor-email" class="form-label">UofT Email Address</label>
+                                <input type="email" id="mentor-email" class="form-input"
+                                    placeholder="name@mail.utoronto.ca" required>
+                            </div>
+                            <div>
+                                <label for="mentor-student-id" class="form-label">Student Number</label>
+                                <input type="text" id="mentor-student-id" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="mentor-program" class="form-label">Program of Study & Year</label>
+                                <input type="text" id="mentor-program" class="form-input"
+                                    placeholder="e.g., Psychology, 2nd Year" required>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Motivation
+                            & Documents</legend>
+                        <div class="space-y-6">
+                            <div>
+                                <label for="mentor-why" class="form-label">Why do you want to be a mentor?</label>
+                                <textarea id="mentor-why" rows="4" class="form-input"
+                                    placeholder="Tell us a bit about your motivation..." required></textarea>
+                            </div>
+                            <div>
+                                <label for="mentor-resume" class="form-label">Upload Resume (PDF)</label>
+                                <input type="file" id="mentor-resume" class="form-input" accept=".pdf">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="pt-4">
+                        <button type="submit" class="btn btn-primary w-full">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Page: Parent Registration -->
+        <section id="page-parent-register" class="section hidden">
+            <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-xl">
+                <h2 class="text-3xl font-bold text-primary mb-6 text-center">Register Your Child</h2>
+                <p class="text-center text-primary mb-8">
+                    Welcome! Please provide some information about you and your child. We'll reach out to discuss the
+                    next
+                    steps, including our matching process.
+                </p>
+                <form id="parent-reg-form" class="space-y-10">
+
+                    <!-- Parent/Guardian Information -->
+                    <fieldset>
+                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Your
+                            Information</legend>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="parent-first-name" class="form-label">Parent/Guardian First Name</label>
+                                <input type="text" id="parent-first-name" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="parent-last-name" class="form-label">Parent/Guardian Last Name</label>
+                                <input type="text" id="parent-last-name" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="parent-relation" class="form-label">Relation to Child</label>
+                                <input type="text" id="parent-relation" class="form-input"
+                                    placeholder="e.g., Mother, Father, Guardian" required>
+                            </div>
+                            <div>
+                                <label for="parent-phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="parent-phone" class="form-input" required>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="parent-email" class="form-label">Email Address</label>
+                                <input type="email" id="parent-email" class="form-input" required>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="parent-address" class="form-label">Address</label>
+                                <input type="text" id="parent-address" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="parent-location" class="form-label">City/Location</label>
+                                <input type="text" id="parent-location" class="form-input" placeholder="e.g., Toronto"
+                                    required>
+                            </div>
+                            <div>
+                                <label for="parent-zip" class="form-label">Zip/Postal Code</label>
+                                <input type="text" id="parent-zip" class="form-input" required>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Emergency Contact Information -->
+                    <fieldset>
+                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Emergency
+                            Contact</legend>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="emergency-first-name" class="form-label">First Name</label>
+                                <input type="text" id="emergency-first-name" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="emergency-last-name" class="form-label">Last Name</label>
+                                <input type="text" id="emergency-last-name" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="emergency-relation" class="form-label">Relation to Child</label>
+                                <input type="text" id="emergency-relation" class="form-input"
+                                    placeholder="e.g., Grandparent, Friend" required>
+                            </div>
+                            <div>
+                                <label for="emergency-phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="emergency-phone" class="form-input" required>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Child's Information -->
+                    <fieldset>
+                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Child's
+                            Information</legend>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="child-first-name" class="form-label">First Name</label>
+                                <input type="text" id="child-first-name" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="child-last-name" class="form-label">Last Name</label>
+                                <input type="text" id="child-last-name" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="child-gender" class="form-label">Gender</label>
+                                <select id="child-gender" class="form-input">
+                                    <option value="">Select...</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="non-binary">Non-binary</option>
+                                    <option value="prefer-not-to-say">Prefer not to say</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="child-age" class="form-label">Age</label>
+                                <input type="number" id="child-age" class="form-input" min="1" required>
+                            </div>
+                            <div>
+                                <label for="child-school" class="form-label">School</label>
+                                <input type="text" id="child-school" class="form-input">
+                            </div>
+                            <div>
+                                <label for="child-grade" class="form-label">Grade</label>
+                                <input type="text" id="child-grade" class="form-input">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="child-diagnosis" class="form-label">Diagnosis (if any)</label>
+                                <input type="text" id="child-diagnosis" class="form-input"
+                                    placeholder="e.g., Autism Spectrum Disorder, ASD Level 1, etc.">
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label class="form-label">Does your child attend a special program for school?</label>
+                                <div class="flex items-center space-x-6 mt-2">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="special-program" value="yes"
+                                            class="text-primary focus:ring-primary">
+                                        <span class="ml-2 text-text-secondary">Yes</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="special-program" value="no"
+                                            class="text-primary focus:ring-primary" checked>
+                                        <span class="ml-2 text-text-secondary">No</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="child-educational-needs" class="form-label">Describe your child's
+                                    educational needs</label>
+                                <textarea id="child-educational-needs" rows="4" class="form-input"
+                                    placeholder="e.g., Needs help with reading comprehension, math homework, organizational skills..."></textarea>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="child-behavioural-needs" class="form-label">Describe your child's
+                                    behavioural needs</label>
+                                <textarea id="child-behavioural-needs" rows="4" class="form-input"
+                                    placeholder="e.g., May need quiet breaks, benefits from clear instructions, sensory sensitivities..."></textarea>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label for="supporting-documents" class="form-label">Upload Supporting Documents
+                                    (Optional)</label>
+                                <input type="file" id="supporting-documents" class="form-input"
+                                    accept=".pdf,.doc,.docx,.jpg,.png" multiple>
+                                <p class="text-xs text-text-secondary mt-1">You can upload diagnostic reports, IEPs, or
+                                    any other relevant documents.</p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="pt-4">
+                        <button type="submit" class="btn btn-secondary w-full">Submit Registration</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Page: Login -->
+        <section id="page-login" class="section hidden">
+            <div class="max-w-md mx-auto">
+                <div class="bg-white p-8 rounded-xl shadow-xl">
+                    <h2 class="text-3xl font-bold text-primary mb-6 text-center">Log In</h2>
+
+                    <!-- Login Tabs -->
+                    <div class="flex border-b border-accent2 mb-6">
+                        <button class="login-tab flex-1 login-tab-trigger active"
+                            data-form="login-mentor-form">Mentor</button>
+                        <button class="login-tab flex-1 login-tab-trigger" data-form="login-parent-form">Parent</button>
+                        <button class="login-tab flex-1 login-tab-trigger" data-form="login-admin-form">Admin</button>
+                    </div>
+
+                    <!-- Mentor Login Form -->
+                    <form id="login-mentor-form" class="login-form space-y-6">
+                        <div>
+                            <label for="login-mentor-email" class="form-label">UofT Email</label>
+                            <input type="email" id="login-mentor-email" class="form-input"
+                                placeholder="name@mail.utoronto.ca" required>
+                        </div>
+                        <div>
+                            <label for="login-mentor-pass" class="form-label">Password</label>
+                            <input type="password" id="login-mentor-pass" class="form-input" required>
+                        </div>
+                        <div class="pt-4">
+                            <button type="submit" class="btn btn-primary w-full">Log In as Mentor</button>
+                        </div>
+                    </form>
+
+                    <!-- Parent Login Form -->
+                    <form id="login-parent-form" class="login-form space-y-6 hidden">
+                        <div>
+                            <label for="login-parent-email" class="form-label">Email</label>
+                            <input type="email" id="login-parent-email" class="form-input" placeholder="you@example.com"
+                                required>
+                        </div>
+                        <div>
+                            <label for="login-parent-pass" class="form-label">Password</label>
+                            <input type="password" id="login-parent-pass" class="form-input" required>
+                        </div>
+                        <div class="pt-4">
+                            <button type="submit" class="btn btn-primary w-full">Log In as Parent</button>
+                        </div>
+                    </form>
+
+                    <!-- Admin Login Form -->
+                    <form id="login-admin-form" class="login-form space-y-6 hidden">
+                        <div>
+                            <label for="login-admin-email" class="form-label">Admin Email</label>
+                            <input type="email" id="login-admin-email" class="form-input" placeholder="admin@aesc.uoft"
+                                required>
+                        </div>
+                        <div>
+                            <label for="login-admin-pass" class="form-label">Password</label>
+                            <input type="password" id="login-admin-pass" class="form-input" required>
+                        </div>
+                        <div class="pt-4">
+                            <button type="submit" class="btn btn-primary w-full">Log In as Admin</button>
+                        </div>
+                    </form>
+
+                    <p class="text-center text-sm text-primary mt-6">
+                        Forgot your password? <a href="#" class="text-primary hover:underline">Reset it here</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-background mt-16">
+        <div class="container mx-auto px-6 py-10">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-3">AESC UofT</h3>
+                    <p class="text-accent3">
+                        Autism Educational Support Club<br>
+                        University of Toronto
+                    </p>
+                </div>
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-3">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about-us-section" class="text-accent3 hover:text-white hover:underline"
+                                data-page="home">About Us</a></li>
+                        <li><a href="#" class="text-accent3 hover:text-white hover:underline"
+                                data-page="events">Events</a></li>
+                        <li><a href="#" class="text-accent3 hover:text-white hover:underline"
+                                data-page="mentor-register">Get Involved</a></li>
+                    </ul>
+                </div>
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-3">Contact Us</h4>
+                    <ul class="space-y-2 text-accent3">
+                        <li>Email: <a href="mailto:aesc.uoft@gmail.com"
+                                class="hover:text-white hover:underline">aesc.uoft@gmail.com</a></li>
+                        <li>Follow us on Instagram!</li>
+                        <li>Hart House, University of Toronto</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center text-accent2 border-t border-accent4 mt-8 pt-6">
+                &copy; 2025 Autism Educational Support Club. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Navigation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pageLinks = document.querySelectorAll('[data-page]');
+            const pages = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            const loginTabs = document.querySelectorAll('.login-tab-trigger');
+            const loginForms = document.querySelectorAll('.login-form');
+
+            // --- Page Navigation Logic ---
+            function showPage(pageId, targetHash = null) {
+                // Hide all pages
+                pages.forEach(page => {
+                    if (!page.classList.contains('hidden')) {
+                        page.classList.add('hidden');
+                    }
+                });
+
+                // Show the target page
+                const activePage = document.getElementById(`page-${pageId}`);
+                if (activePage) {
+                    activePage.classList.remove('hidden');
+                    // Scroll to top OR to hash
+                    if (targetHash) {
+                        const targetElement = document.getElementById(targetHash.substring(1)); // Remove '#'
+                        if (targetElement) {
+                            // Use smooth scroll into view
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        } else {
+                            window.scrollTo(0, 0); // Fallback
+                        }
+                    } else {
+                        window.scrollTo(0, 0);
+                    }
+                }
+
+                // Update active nav link
+                const allNavLinks = document.querySelectorAll('.nav-link'); // Get all links (desktop + mobile)
+                allNavLinks.forEach(link => {
+                    if (link.dataset.page === pageId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+
+                // Close mobile menu on navigation
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            }
+
+            // Add click listeners to all page links
+            pageLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const pageId = this.dataset.page;
+                    const targetHash = this.hash; // Get the href attribute's hash (e.g., #about-us-section)
+
+                    showPage(pageId, targetHash); // Pass the hash to showPage
+                });
+            });
+
+            // --- Mobile Menu Toggle ---
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- Login Tab Logic ---
+            loginTabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const formId = this.dataset.form;
+
+                    // Hide all login forms
+                    loginForms.forEach(form => {
+                        if (!form.classList.contains('hidden')) {
+                            form.classList.add('hidden');
+                        }
+                    });
+
+                    // Show the target form
+                    const targetForm = document.getElementById(formId);
+                    if (targetForm) {
+                        targetForm.classList.remove('hidden');
+                    }
+
+                    // Update active tab
+                    loginTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // --- Form Submission Handlers (Placeholder) ---
+            // We are not submitting to a server, just preventing default and logging
+
+            function handleFormSubmit(e) {
+                e.preventDefault();
+                const formId = e.target.id;
+                console.log(`Form submitted: ${formId}`);
+
+                // In a real app, you'd collect form data and send it to a server.
+                // For this demo, let's just show a success message
+                // We will use a simple alert for now, as requested
+
+                // You could redirect to the home page or a "thank you" page
+                if (formId === 'mentor-reg-form' || formId === 'parent-reg-form') {
+                    // Using alert as a placeholder for a modal
+                    alert('Thank you for registering! We will be in touch soon.');
+                    e.target.reset(); // Clear the form
+                    showPage('home'); // Go back to home after registration
+                }
+
+                if (formId.startsWith('login-')) {
+                    // Clear the form
+                    e.target.reset();
+
+                    // NEW LOGIC: Redirect to the correct dashboard
+                    if (formId === 'login-mentor-form') {
+                        // Redirect to the mentor dashboard
+                        window.location.href = 'mentor.html';
+                    } else if (formId === 'login-parent-form') {
+                        // Redirect to the parent dashboard
+                        window.location.href = 'parent.html';
+                    } else if (formId === 'login-admin-form') {
+                        // Redirect to the admin dashboard
+                        window.location.href = 'admin.html';
+                    }
+                }
+            }
+
+            // Helper to safely add event listeners
+            function safeAddSubmitListener(id, handler) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('submit', handler);
+                } else {
+                    console.error(`Could not find element with id: ${id}`);
+                }
+            }
+
+            safeAddSubmitListener('mentor-reg-form', handleFormSubmit);
+            safeAddSubmitListener('parent-reg-form', handleFormSubmit);
+            safeAddSubmitListener('login-mentor-form', handleFormSubmit);
+            safeAddSubmitListener('login-parent-form', handleFormSubmit);
+            safeAddSubmitListener('login-admin-form', handleFormSubmit);
+
+            // Show home page by default
+            showPage('home');
+        });
+    </script>
+</body>
+
+</html>
