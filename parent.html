@@ -32,6 +32,11 @@
             color: #333;
         }
 
+        /* Helper class for transitions */
+        .section {
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
         /* Styles for the active nav link */
         .nav-link.active {
             color: var(--primary);
@@ -42,17 +47,11 @@
         .btn {
             display: inline-block;
             padding: 0.75rem 1.5rem;
-            /* py-3 px-6 */
             border-radius: 0.5rem;
-            /* rounded-lg */
             font-size: 1.125rem;
-            /* text-lg */
             line-height: 1.75rem;
-            /* text-lg */
             font-weight: 600;
-            /* font-semibold */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            /* shadow-md */
             transition: transform 0.3s ease-in-out;
             text-align: center;
         }
@@ -69,6 +68,24 @@
         .btn-secondary {
             background-color: var(--accent4);
             color: white;
+        }
+
+        /* Carousel Styling (Consistent with Mentor View) */
+        .journal-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            scroll-behavior: smooth;
+        }
+
+        .journal-entry-card {
+            min-width: 280px;
+            background: #fff;
+            border: 1px solid var(--accent3);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
     </style>
 
@@ -116,7 +133,10 @@
 
             <!-- Navigation Links -->
             <div id="nav-links" class="hidden md:flex md:items-center md:space-x-6">
-                <a href="#" class="nav-link text-text-primary hover:text-primary active">Dashboard</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary active"
+                    data-page="dashboard">Dashboard</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="journal-view">Session
+                    Journals</a>
                 <a href="#" class="nav-link text-text-primary hover:text-primary">My Child's Profile</a>
                 <a href="#" class="nav-link text-text-primary hover:text-primary">Events</a>
                 <a href="index.html"
@@ -127,7 +147,10 @@
 
         <!-- Mobile Menu (Hidden by default) -->
         <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
-            <a href="#" class="block nav-link text-text-primary hover:text-primary active">Dashboard</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary active"
+                data-page="dashboard">Dashboard</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary" data-page="journal-view">Session
+                Journals</a>
             <a href="#" class="block nav-link text-text-primary hover:text-primary">My Child's Profile</a>
             <a href="#" class="block nav-link text-text-primary hover:text-primary">Events</a>
             <a href="index.html"
@@ -139,40 +162,83 @@
     <!-- Main Content Area -->
     <main class="container mx-auto px-6 py-12 flex-grow">
 
-        <h1 class="text-4xl font-bold text-primary mb-8">Welcome, Parent!</h1>
+        <!-- Page: Dashboard -->
+        <section id="page-dashboard" class="section">
+            <h1 class="text-4xl font-bold text-primary mb-8">Welcome, Parent!</h1>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Card 1 -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h3 class="text-2xl font-semibold text-accent4 mb-3">Your Child's Mentor</h3>
-                <p class="text-text-secondary mb-4">
-                    <strong>Name:</strong> Sarah K.<br>
-                    <strong>Program:</strong> 3rd Year, Psychology<br>
-                    <strong>Status:</strong> Matched
-                </p>
-                <a href="#" class="text-primary font-semibold hover:underline">Contact Mentor &rarr;</a>
-            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            <!-- Card 2 -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h3 class="text-2xl font-semibold text-accent4 mb-3">Upcoming Events</h3>
-                <p class="text-text-secondary mb-4">
-                    <strong>Event:</strong> Sensory-Friendly Craft Day<br>
-                    <strong>Date:</strong> Saturday, Nov 15<br>
-                    <strong>Status:</strong> Registered
-                </p>
-                <a href="#" class="text-primary font-semibold hover:underline">View All Events &rarr;</a>
-            </div>
+                <!-- New Journal Status Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-primary">
+                    <h3 class="text-2xl font-semibold text-accent4 mb-3">Session Updates</h3>
+                    <p class="text-text-secondary mb-4">
+                        <span id="parent-journal-msg">No new reports this week.</span>
+                    </p>
+                    <a href="#" data-page="journal-view" class="text-primary font-semibold hover:underline">Read
+                        Journals &rarr;</a>
+                </div>
 
-            <!-- Card 3 -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h3 class="text-2xl font-semibold text-accent4 mb-3">Parent Resources</h3>
-                <p class="text-text-secondary mb-4">
-                    View community resources, club announcements, and our parent handbook.
-                </p>
-                <a href="#" class="text-primary font-semibold hover:underline">Browse Resources &rarr;</a>
+                <!-- Card 1 -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold text-accent4 mb-3">Your Child's Mentor</h3>
+                    <p class="text-text-secondary mb-4">
+                        <strong>Name:</strong> Jane Doe<br>
+                        <strong>Program:</strong> 3rd Year, Psychology<br>
+                        <strong>Status:</strong> Matched
+                    </p>
+                    <a href="#" class="text-primary font-semibold hover:underline">Contact Mentor &rarr;</a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold text-accent4 mb-3">Upcoming Events</h3>
+                    <p class="text-text-secondary mb-4">
+                        <strong>Event:</strong> Sensory-Friendly Craft Day<br>
+                        <strong>Date:</strong> Saturday, Nov 15<br>
+                        <strong>Status:</strong> Registered
+                    </p>
+                    <a href="#" class="text-primary font-semibold hover:underline">View All Events &rarr;</a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold text-accent4 mb-3">Parent Resources</h3>
+                    <p class="text-text-secondary mb-4">
+                        View community resources, club announcements, and our parent handbook.
+                    </p>
+                    <a href="#" class="text-primary font-semibold hover:underline">Browse Resources &rarr;</a>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Page: Journal View -->
+        <section id="page-journal-view" class="section hidden">
+            <h1 class="text-4xl font-bold text-primary mb-8">Session Journals</h1>
+
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-accent4 mb-6">Mentor Reports</h3>
+                <p class="text-sm text-text-secondary mb-4">Below are the weekly summaries submitted by Jane Doe.</p>
+
+                <div class="journal-carousel" id="parent-journal-history">
+                    <!-- Dynamic Journal Entry from Mentor will appear here -->
+                    <!-- Hardcoded history items for demo -->
+                    <div class="journal-entry-card">
+                        <p class="text-sm text-gray-500 font-semibold mb-1">Nov 04, 2025</p>
+                        <h4 class="text-primary font-bold mb-2">Park Outing</h4>
+                        <p class="text-sm text-text-secondary mb-2 line-clamp-3">Went to Queen's Park. Played tag and
+                            looked at squirrels. Alex was very energetic!</p>
+                        <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Read</span>
+                    </div>
+                    <div class="journal-entry-card">
+                        <p class="text-sm text-gray-500 font-semibold mb-1">Oct 28, 2025</p>
+                        <h4 class="text-primary font-bold mb-2">Library Reading</h4>
+                        <p class="text-sm text-text-secondary mb-2 line-clamp-3">Read books about trains. Worked on
+                            using 'indoor voice'. Success!</p>
+                        <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Read</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </main>
 
@@ -183,15 +249,58 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Mobile Menu -->
+    <!-- JavaScript for Mobile Menu & Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- Navigation Logic ---
+            const pageLinks = document.querySelectorAll('[data-page]');
+            const pages = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
 
-            mobileMenuButton.addEventListener('click', function () {
-                mobileMenu.classList.toggle('hidden');
+            function showPage(pageId) {
+                pages.forEach(page => page.classList.add('hidden'));
+                const activePage = document.getElementById(`page-${pageId}`);
+                if (activePage) activePage.classList.remove('hidden');
+
+                navLinks.forEach(link => {
+                    if (link.dataset.page === pageId) link.classList.add('active');
+                    else link.classList.remove('active');
+                });
+
+                mobileMenu.classList.add('hidden');
+                window.scrollTo(0, 0);
+            }
+
+            pageLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    showPage(this.dataset.page);
+                });
             });
+
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+            // --- Journal View Logic ---
+            const journalStatus = localStorage.getItem('aesc_journal_status');
+            const journalHistory = document.getElementById('parent-journal-history');
+            const journalMsg = document.getElementById('parent-journal-msg');
+
+            if (journalStatus === 'complete') {
+                journalMsg.innerHTML = '<strong class="text-primary">New Report Available!</strong> Check Session Journals.';
+
+                // Add the "Latest Entry" card to the carousel
+                const newCard = document.createElement('div');
+                newCard.className = 'journal-entry-card border-l-4 border-primary bg-blue-50';
+                newCard.innerHTML = `
+                    <p class="text-sm text-gray-500 font-semibold mb-1">Today</p>
+                    <h4 class="text-primary font-bold mb-2">Latest Session</h4>
+                    <p class="text-sm text-text-secondary mb-2">New entry submitted by Jane Doe.</p>
+                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">New</span>
+                `;
+                journalHistory.prepend(newCard);
+            }
         });
     </script>
 </body>

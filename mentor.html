@@ -32,6 +32,11 @@
             color: #333;
         }
 
+        /* Helper class for transitions */
+        .section {
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
         /* Styles for the active nav link */
         .nav-link.active {
             color: var(--primary);
@@ -42,17 +47,11 @@
         .btn {
             display: inline-block;
             padding: 0.75rem 1.5rem;
-            /* py-3 px-6 */
             border-radius: 0.5rem;
-            /* rounded-lg */
             font-size: 1.125rem;
-            /* text-lg */
             line-height: 1.75rem;
-            /* text-lg */
             font-weight: 600;
-            /* font-semibold */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            /* shadow-md */
             transition: transform 0.3s ease-in-out;
             text-align: center;
         }
@@ -69,6 +68,57 @@
         .btn-secondary {
             background-color: var(--accent4);
             color: white;
+        }
+
+        /* Helper for disabled buttons */
+        .btn:disabled {
+            background-color: #9ca3af;
+            color: white;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Form input styling */
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--primary);
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .form-input:disabled {
+            background-color: #f3f4f6;
+            cursor: not-allowed;
+            color: #6b7280;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        /* Carousel Styling */
+        .journal-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            scroll-behavior: smooth;
+        }
+
+        .journal-entry-card {
+            min-width: 280px;
+            background: #fff;
+            border: 1px solid var(--accent3);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
     </style>
 
@@ -116,9 +166,12 @@
 
             <!-- Navigation Links -->
             <div id="nav-links" class="hidden md:flex md:items-center md:space-x-6">
-                <a href="#" class="nav-link text-text-primary hover:text-primary active">Dashboard</a>
-                <a href="#" class="nav-link text-text-primary hover:text-primary">My Mentee</a>
-                <a href="#" class="nav-link text-text-primary hover:text-primary">Resources</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary active"
+                    data-page="dashboard">Dashboard</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="onboarding">Onboarding</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="journal">Journal</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="mentee">My Mentee</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="resources">Resources</a>
                 <a href="index.html"
                     class="ml-4 px-5 py-2 bg-accent4 text-white rounded-lg font-medium hover:bg-opacity-90 transition-colors">Log
                     Out</a>
@@ -127,9 +180,13 @@
 
         <!-- Mobile Menu (Hidden by default) -->
         <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
-            <a href="#" class="block nav-link text-text-primary hover:text-primary active">Dashboard</a>
-            <a href="#" class="block nav-link text-text-primary hover:text-primary">My Mentee</a>
-            <a href="#" class="block nav-link text-text-primary hover:text-primary">Resources</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary active"
+                data-page="dashboard">Dashboard</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary"
+                data-page="onboarding">Onboarding</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary" data-page="journal">Journal</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary" data-page="mentee">My Mentee</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary" data-page="resources">Resources</a>
             <a href="index.html"
                 class="block w-full text-center mt-2 px-5 py-2 bg-accent4 text-white rounded-lg font-medium hover:bg-opacity-90 transition-colors">Log
                 Out</a>
@@ -139,40 +196,231 @@
     <!-- Main Content Area -->
     <main class="container mx-auto px-6 py-12 flex-grow">
 
-        <h1 class="text-4xl font-bold text-primary mb-8">Welcome, Mentor!</h1>
+        <!-- Page: Dashboard -->
+        <section id="page-dashboard" class="section">
+            <h1 class="text-4xl font-bold text-primary mb-8">Welcome, Mentor!</h1>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Card 1 -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h3 class="text-2xl font-semibold text-accent4 mb-3">My Mentee</h3>
-                <p class="text-text-secondary mb-4">
-                    <strong>Name:</strong> Alex J.<br>
-                    <strong>Age:</strong> 8<br>
-                    <strong>Interests:</strong> Trains, LEGOs
-                </p>
-                <a href="#" class="text-primary font-semibold hover:underline">View Full Profile &rarr;</a>
-            </div>
+            <div id="dashboard-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            <!-- Card 2 -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h3 class="text-2xl font-semibold text-accent4 mb-3">Upcoming Sessions</h3>
-                <p class="text-text-secondary mb-4">
-                    <strong>Date:</strong> Saturday, Nov 18<br>
-                    <strong>Time:</strong> 2:00 PM<br>
-                    <strong>Location:</strong> Gerstein Library (Study Room)
-                </p>
-                <a href="#" class="text-primary font-semibold hover:underline">Manage Sessions &rarr;</a>
-            </div>
+                <!-- Journal Status Card (Dynamic Position) -->
+                <div id="dashboard-journal-card"
+                    class="bg-white rounded-xl shadow-lg p-6 border-t-4 transition-colors duration-300 cursor-pointer"
+                    onclick="document.querySelector('[data-page=\'journal\']').click()">
+                    <h3 class="text-2xl font-semibold text-accent4 mb-3">Weekly Journal</h3>
+                    <div id="dashboard-journal-badge"
+                        class="inline-block px-3 py-1 rounded-full text-sm font-bold mb-4">
+                        Loading...
+                    </div>
+                    <p id="dashboard-journal-msg" class="text-text-secondary mb-4">
+                        Log your latest session details.
+                    </p>
+                    <a href="#" data-page="journal" class="text-primary font-semibold hover:underline">Go to Journal
+                        &rarr;</a>
+                </div>
 
-            <!-- Card 3 -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h3 class="text-2xl font-semibold text-accent4 mb-3">Mentor Resources</h3>
-                <p class="text-text-secondary mb-4">
-                    Access training materials, activity guides, and communication tips.
-                </p>
-                <a href="#" class="text-primary font-semibold hover:underline">Browse Resources &rarr;</a>
+                <!-- Onboarding Status Card (Dynamic Position) -->
+                <div id="dashboard-onboarding-card"
+                    class="bg-white rounded-xl shadow-lg p-6 border-t-4 transition-colors duration-300 cursor-pointer"
+                    onclick="document.querySelector('[data-page=\'onboarding\']').click()">
+                    <h3 class="text-2xl font-semibold text-accent4 mb-3">Onboarding Status</h3>
+                    <div id="dashboard-onboarding-badge"
+                        class="inline-block px-3 py-1 rounded-full text-sm font-bold mb-4">
+                        Loading...
+                    </div>
+                    <p id="dashboard-onboarding-msg" class="text-text-secondary mb-4">
+                        Check your onboarding requirements.
+                    </p>
+                    <a href="#" data-page="onboarding" class="text-primary font-semibold hover:underline">Go to
+                        Onboarding &rarr;</a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold text-accent4 mb-3">My Mentee</h3>
+                    <p class="text-text-secondary mb-4">
+                        <strong>Name:</strong> Alex J.<br>
+                        <strong>Age:</strong> 8<br>
+                        <strong>Interests:</strong> Trains, LEGOs
+                    </p>
+                    <a href="#" class="text-primary font-semibold hover:underline">View Full Profile &rarr;</a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold text-accent4 mb-3">Upcoming Sessions</h3>
+                    <p class="text-text-secondary mb-4">
+                        <strong>Date:</strong> Saturday, Nov 18<br>
+                        <strong>Time:</strong> 2:00 PM<br>
+                        <strong>Location:</strong> Gerstein Library (Study Room)
+                    </p>
+                    <a href="#" class="text-primary font-semibold hover:underline">Manage Sessions &rarr;</a>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold text-accent4 mb-3">Mentor Resources</h3>
+                    <p class="text-text-secondary mb-4">
+                        Access training materials, activity guides, and communication tips.
+                    </p>
+                    <a href="#" class="text-primary font-semibold hover:underline">Browse Resources &rarr;</a>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Page: Onboarding (Full Section) -->
+        <section id="page-onboarding" class="section hidden">
+            <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-xl">
+                <h2 class="text-3xl font-bold text-primary mb-6 text-center">Mentor Onboarding</h2>
+                <div id="onboarding-alert" class="bg-gray-100 border-l-4 border-gray-500 p-4 mb-8">
+                    <p class="text-sm">
+                        <strong>Status:</strong> <span id="onboarding-page-status">Loading...</span>
+                    </p>
+                </div>
+
+                <form id="onboarding-form" class="space-y-8">
+                    <!-- 1. Vulnerable Sector Check -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent4 mb-4 border-b border-gray-200 pb-2">Documents</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="form-label">Upload Vulnerable Sector Check (PDF)</label>
+                                <input type="file" class="form-input text-sm" accept=".pdf,.jpg,.png" required>
+                            </div>
+                            <div>
+                                <label class="form-label">Upload Signed Club Contract (PDF)</label>
+                                <input type="file" class="form-input text-sm" accept=".pdf,.jpg,.png" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Mentor Bio -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent4 mb-4 border-b border-gray-200 pb-2">Profile
+                            Details</h3>
+                        <div>
+                            <label class="form-label">Mentor Bio</label>
+                            <textarea class="form-input" rows="4" placeholder="Tell us a bit about yourself..."
+                                required></textarea>
+                            <p class="text-xs text-text-secondary mt-1">This will be visible to your mentee's parents.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 3. Training Sessions -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent4 mb-4 border-b border-gray-200 pb-2">Training</h3>
+                        <div class="space-y-4">
+                            <label class="flex items-center space-x-3 p-3 border rounded-lg bg-gray-50">
+                                <input type="checkbox" class="h-5 w-5 rounded text-primary focus:ring-primary" required>
+                                <div>
+                                    <span class="block text-sm font-medium text-gray-900">Completed Session 1:
+                                        Introduction to ASD</span>
+                                    <span class="block text-xs text-gray-500">Date Attended: Oct 12, 2025</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 border rounded-lg bg-gray-50">
+                                <input type="checkbox" class="h-5 w-5 rounded text-primary focus:ring-primary" required>
+                                <div>
+                                    <span class="block text-sm font-medium text-gray-900">Completed Session 2: Safety &
+                                        Protocol</span>
+                                    <span class="block text-xs text-gray-500">Date Attended: Oct 14, 2025</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" id="onboarding-submit-btn" class="btn btn-primary w-full">Submit for
+                            Approval</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Page: Journal (Full Section) -->
+        <section id="page-journal" class="section hidden">
+            <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-xl">
+                <h2 class="text-3xl font-bold text-primary mb-6 text-center">Weekly Journal</h2>
+
+                <!-- Journal Form -->
+                <div class="mb-10">
+                    <h3 class="text-xl font-semibold text-accent4 mb-4 border-b border-gray-200 pb-2">New Entry</h3>
+                    <form id="journal-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="form-label">Date of Session</label>
+                                <input type="date" class="form-input" required>
+                            </div>
+                            <div>
+                                <label class="form-label">Duration (Hours)</label>
+                                <input type="number" step="0.5" class="form-input" placeholder="e.g. 1.5" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Activities Completed</label>
+                            <textarea class="form-input" rows="2" placeholder="What did you do today?"
+                                required></textarea>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Challenges Faced (if any)</label>
+                            <textarea class="form-input" rows="2"
+                                placeholder="Any behavioral or logistical issues?"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Notes for Next Session</label>
+                            <textarea class="form-input" rows="2"
+                                placeholder="Goals or items to bring next time."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-full">Submit Journal</button>
+                    </form>
+                </div>
+
+                <!-- Previous Entries Carousel -->
+                <div>
+                    <h3 class="text-xl font-semibold text-accent4 mb-4 border-b border-gray-200 pb-2">Previous Entries
+                    </h3>
+                    <div class="journal-carousel" id="journal-history">
+                        <!-- Simulated History Items -->
+                        <div class="journal-entry-card">
+                            <p class="text-sm text-gray-500 font-semibold mb-1">Nov 04, 2025</p>
+                            <h4 class="text-primary font-bold mb-2">Park Outing</h4>
+                            <p class="text-sm text-text-secondary mb-2 line-clamp-2">Went to Queen's Park. Played tag
+                                and looked at squirrels. Alex was very energetic!</p>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Submitted</span>
+                        </div>
+                        <div class="journal-entry-card">
+                            <p class="text-sm text-gray-500 font-semibold mb-1">Oct 28, 2025</p>
+                            <h4 class="text-primary font-bold mb-2">Library Reading</h4>
+                            <p class="text-sm text-text-secondary mb-2 line-clamp-2">Read books about trains. Worked on
+                                using 'indoor voice'. Success!</p>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Submitted</span>
+                        </div>
+                        <div class="journal-entry-card">
+                            <p class="text-sm text-gray-500 font-semibold mb-1">Oct 21, 2025</p>
+                            <h4 class="text-primary font-bold mb-2">First Meeting</h4>
+                            <p class="text-sm text-text-secondary mb-2 line-clamp-2">Initial meet and greet with
+                                parents. Discussed goals and safety.</p>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Submitted</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Placeholders for other sections -->
+        <section id="page-mentee" class="section hidden">
+            <h1 class="text-4xl font-bold text-primary mb-8">My Mentee</h1>
+            <p>Mentee profile details would go here.</p>
+        </section>
+
+        <section id="page-resources" class="section hidden">
+            <h1 class="text-4xl font-bold text-primary mb-8">Resources</h1>
+            <p>Resource library would go here.</p>
+        </section>
 
     </main>
 
@@ -183,14 +431,198 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Mobile Menu -->
+    <!-- JavaScript for Navigation & Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- Navigation Logic ---
+            const pageLinks = document.querySelectorAll('[data-page]');
+            const pages = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
 
-            mobileMenuButton.addEventListener('click', function () {
-                mobileMenu.classList.toggle('hidden');
+            function showPage(pageId) {
+                // Hide all pages
+                pages.forEach(page => page.classList.add('hidden'));
+                // Show target
+                const activePage = document.getElementById(`page-${pageId}`);
+                if (activePage) activePage.classList.remove('hidden');
+
+                // Update Nav
+                navLinks.forEach(link => {
+                    if (link.dataset.page === pageId) link.classList.add('active');
+                    else link.classList.remove('active');
+                });
+
+                // Close mobile menu
+                mobileMenu.classList.add('hidden');
+                window.scrollTo(0, 0);
+            }
+
+            pageLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    showPage(this.dataset.page);
+                });
+            });
+
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+            // --- Dashboard Grid & Cards ---
+            const dashboardGrid = document.getElementById('dashboard-grid');
+
+            // Onboarding Elements
+            const onboardCard = document.getElementById('dashboard-onboarding-card');
+            const onboardBadge = document.getElementById('dashboard-onboarding-badge');
+            const onboardMsg = document.getElementById('dashboard-onboarding-msg');
+            const onboardForm = document.getElementById('onboarding-form');
+            const onboardSubmitBtn = document.getElementById('onboarding-submit-btn');
+            const onboardPageStatus = document.getElementById('onboarding-page-status');
+            const onboardAlert = document.getElementById('onboarding-alert');
+
+            // Journal Elements
+            const journalCard = document.getElementById('dashboard-journal-card');
+            const journalBadge = document.getElementById('dashboard-journal-badge');
+            const journalMsg = document.getElementById('dashboard-journal-msg');
+            const journalForm = document.getElementById('journal-form');
+            const journalHistory = document.getElementById('journal-history');
+
+            // --- STATE MANAGEMENT ---
+            let onboardStatus = localStorage.getItem('aesc_onboarding_status') || 'incomplete';
+            let journalStatus = localStorage.getItem('aesc_journal_status') || 'incomplete';
+
+            function updateDashboard() {
+                // 1. Reset Classes & Remove Cards from DOM temporarily to re-order
+                onboardCard.remove();
+                journalCard.remove();
+
+                onboardCard.className = "bg-white rounded-xl shadow-lg p-6 border-t-4 transition-colors duration-300 cursor-pointer";
+                journalCard.className = "bg-white rounded-xl shadow-lg p-6 border-t-4 transition-colors duration-300 cursor-pointer";
+
+                onboardBadge.className = "inline-block px-3 py-1 rounded-full text-sm font-bold mb-4";
+                journalBadge.className = "inline-block px-3 py-1 rounded-full text-sm font-bold mb-4";
+
+                // --- ONBOARDING LOGIC ---
+                const obInputs = onboardForm.querySelectorAll('input, textarea');
+
+                if (onboardStatus === 'incomplete') {
+                    onboardCard.classList.add('border-red-500');
+                    onboardBadge.textContent = 'Incomplete';
+                    onboardBadge.classList.add('bg-red-100', 'text-red-700');
+                    onboardMsg.textContent = 'Action Required: Complete profile.';
+
+                    onboardPageStatus.textContent = 'Incomplete';
+                    onboardAlert.className = 'bg-red-50 border-l-4 border-red-500 p-4 mb-8 text-red-700';
+                    obInputs.forEach(i => i.disabled = false);
+                    onboardSubmitBtn.disabled = false;
+                    onboardSubmitBtn.textContent = 'Submit for Approval';
+
+                } else if (onboardStatus === 'pending') {
+                    onboardCard.classList.add('border-gray-400');
+                    onboardBadge.textContent = 'Pending Approval';
+                    onboardBadge.classList.add('bg-gray-100', 'text-gray-600');
+                    onboardMsg.textContent = 'Under review.';
+
+                    onboardPageStatus.textContent = 'Pending';
+                    onboardAlert.className = 'bg-gray-50 border-l-4 border-gray-500 p-4 mb-8 text-gray-700';
+                    obInputs.forEach(i => i.disabled = true);
+                    onboardSubmitBtn.disabled = true;
+                    onboardSubmitBtn.textContent = 'Submitted';
+
+                } else { // Approved
+                    onboardCard.classList.add('border-green-500');
+                    onboardBadge.textContent = 'Complete';
+                    onboardBadge.classList.add('bg-green-100', 'text-green-700');
+                    onboardMsg.textContent = 'You are ready to mentor!';
+
+                    onboardPageStatus.textContent = 'Complete';
+                    onboardAlert.className = 'bg-green-50 border-l-4 border-green-500 p-4 mb-8 text-green-700';
+                    obInputs.forEach(i => i.disabled = true);
+                    onboardSubmitBtn.disabled = true;
+                    onboardSubmitBtn.textContent = 'Approved';
+                }
+
+                // --- JOURNAL LOGIC ---
+                if (journalStatus === 'incomplete') {
+                    journalCard.classList.add('border-red-500');
+                    journalBadge.textContent = 'Incomplete';
+                    journalBadge.classList.add('bg-red-100', 'text-red-700');
+                    journalMsg.textContent = 'Please submit this week\'s journal.';
+                } else {
+                    journalCard.classList.add('border-green-500');
+                    journalBadge.textContent = 'Complete';
+                    journalBadge.classList.add('bg-green-100', 'text-green-700');
+                    journalMsg.textContent = 'Entry submitted for this week.';
+                }
+
+                // --- RE-INSERTION LOGIC (ORDERING) ---
+
+                // 1. Insert Journal (High Priority if Incomplete)
+                if (journalStatus === 'incomplete') {
+                    dashboardGrid.prepend(journalCard);
+                }
+
+                // 2. Insert Onboarding (Overrides Journal if Incomplete)
+                if (onboardStatus === 'incomplete' || onboardStatus === 'pending') {
+                    dashboardGrid.prepend(onboardCard);
+                } else {
+                    // If Onboarding is complete (approved), it goes LAST.
+                    dashboardGrid.appendChild(onboardCard);
+                }
+
+                // 3. Insert Journal (Low Priority if Complete)
+                // If journal is complete, it goes SECOND LAST (before the completed Onboarding card).
+                if (journalStatus === 'complete') {
+                    if (onboardStatus === 'approved') {
+                        // Insert before the last child (which is Onboarding)
+                        dashboardGrid.insertBefore(journalCard, dashboardGrid.lastElementChild);
+                    } else {
+                        // If onboarding is incomplete (at top), just append journal to end
+                        dashboardGrid.appendChild(journalCard);
+                    }
+                }
+            }
+
+            // Initial Update
+            updateDashboard();
+            showPage('dashboard');
+
+            // --- Handlers ---
+
+            // Onboarding Submit
+            onboardForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                onboardStatus = 'pending';
+                localStorage.setItem('aesc_onboarding_status', 'pending');
+                updateDashboard();
+                alert('Onboarding submitted!');
+                showPage('dashboard');
+            });
+
+            // Journal Submit
+            journalForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                journalStatus = 'complete';
+                localStorage.setItem('aesc_journal_status', 'complete');
+
+                // Create a simulated entry card
+                const dateVal = journalForm.querySelector('input[type="date"]').value || new Date().toISOString().split('T')[0];
+                const activityVal = journalForm.querySelector('textarea').value;
+
+                const newCard = document.createElement('div');
+                newCard.className = 'journal-entry-card border-l-4 border-primary';
+                newCard.innerHTML = `
+                    <p class="text-sm text-gray-500 font-semibold mb-1">${dateVal}</p>
+                    <h4 class="text-primary font-bold mb-2">Weekly Session</h4>
+                    <p class="text-sm text-text-secondary mb-2 line-clamp-2">${activityVal}</p>
+                    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Just Submitted</span>
+                `;
+                journalHistory.prepend(newCard); // Add to top of history
+
+                journalForm.reset();
+                updateDashboard();
+                alert('Journal Entry Saved!');
+                showPage('dashboard');
             });
         });
     </script>

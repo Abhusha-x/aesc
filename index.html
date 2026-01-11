@@ -110,6 +110,13 @@
             transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
+        .form-input-small {
+            padding: 0.4rem 0.8rem;
+            /* Smaller padding */
+            font-size: 0.95rem;
+            /* Slightly smaller text */
+        }
+
         .form-input:focus {
             outline: 2px solid transparent;
             outline-offset: 2px;
@@ -133,6 +140,27 @@
             @apply text-primary border-b-2 border-primary;
             color: var(--primary);
             border-color: var(--primary);
+            font-weight: 700;
+            /* Made bold */
+        }
+
+        /* Scrollbar styling for custom dropdowns */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #beccbf;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #91a291;
         }
     </style>
 
@@ -181,6 +209,7 @@
             <!-- Navigation Links -->
             <div id="nav-links" class="hidden md:flex md:items-center md:space-x-6">
                 <a href="#" class="nav-link text-text-primary hover:text-primary active" data-page="home">Home</a>
+                <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="team">Meet the Team</a>
                 <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="events">Events</a>
                 <a href="#" class="nav-link text-text-primary hover:text-primary" data-page="mentor-register">Become a
                     Mentor</a>
@@ -195,6 +224,7 @@
         <!-- Mobile Menu (Hidden by default) -->
         <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
             <a href="#" class="block nav-link text-text-primary hover:text-primary active" data-page="home">Home</a>
+            <a href="#" class="block nav-link text-text-primary hover:text-primary" data-page="team">Meet the Team</a>
             <a href="#" class="block nav-link text-text-primary hover:text-primary" data-page="events">Events</a>
             <a href="#" class="block nav-link text-text-primary hover:text-primary" data-page="mentor-register">Become a
                 Mentor</a>
@@ -298,83 +328,51 @@
                         by a network of compassionate and dedicated individuals. We strive to create an inclusive
                         environment at UofT and beyond, where neurodiversity is celebrated.
                     </p>
-                    <h3 class="text-2xl font-semibold text-primary mt-8 mb-4">Meet the Team</h3>
-                    <p>
-                        Our executive team is composed of passionate students from diverse faculties, all united by a
-                        common goal.
-                    </p>
-
-                    <!-- Member Profiles Grid -->
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 not-prose">
-                        <!-- Profile Card 1 -->
-                        <div class="text-center">
-                            <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover bg-accent2"
-                                src="https://placehold.co/200x200/91a291/edf3ed?text=Profile" alt="Profile picture">
-                            <h4 class="text-xl font-semibold text-primary">Jane Doe</h4>
-                            <p class="text-accent4 font-medium">President</p>
-                            <p class="text-text-secondary text-sm mt-2">Leads the club's overall strategy and
-                                operations. Passionate about community building.</p>
-                        </div>
-                        <!-- Profile Card 2 -->
-                        <div class="text-center">
-                            <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover bg-accent2"
-                                src="https://placehold.co/200x200/7c8c74/edf3ed?text=Profile" alt="Profile picture">
-                            <h4 class="text-xl font-semibold text-primary">John Smith</h4>
-                            <p class="text-accent4 font-medium">VP Mentorship</p>
-                            <p class="text-text-secondary text-sm mt-2">Manages mentor recruitment, training, and
-                                matching with families.</p>
-                        </div>
-                        <!-- Profile Card 3 -->
-                        <div class="text-center">
-                            <img class="w-32 h-32 rounded-full mx-auto mb-4 object-cover bg-accent2"
-                                src="https://placehold.co/200x200/b4c2b4/476349?text=Profile" alt="Profile picture">
-                            <h4 class="text-xl font-semibold text-primary">Alex Chen</h4>
-                            <p class="text-accent4 font-medium">VP Events</p>
-                            <p class="text-text-secondary text-sm mt-2">Organizes all our fun and inclusive events for
-                                mentors and children.</p>
-                        </div>
-                    </div>
-                    <!-- End Member Profiles Grid -->
-
                 </div>
             </div>
         </section>
 
-        <!-- Page: About Us (This is the old, hidden one, which is fine to keep as the navigation logic hides it) -->
-        <section id="page-about" class="section hidden">
-            <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-xl">
-                <h2 class="text-4xl font-bold text-primary mb-6 text-center">About Our Club</h2>
-                <img class="w-full h-64 object-cover rounded-lg mb-8"
-                    src="https://placehold.co/1000x400/74907c/edf3ed?text=Our+Team" alt="AESC Team">
+        <!-- Page: Meet the Team -->
+        <section id="page-team" class="section hidden">
+            <div class="max-w-6xl mx-auto px-6">
+                <h2 class="text-4xl font-bold text-primary mb-12 text-center">Meet the Team</h2>
+                <p class="text-xl text-center text-text-secondary max-w-3xl mx-auto mb-16">
+                    Our executive team is composed of passionate students from diverse faculties, all united by a
+                    common goal.
+                </p>
 
-                <div class="prose prose-lg max-w-none text-text-secondary">
-                    <p>
-                        Founded in 2023, the Autism Educational Support Club (AESC) at the University of Toronto is a
-                        student-run organization dedicated to bridging the gap between the UofT community and the local
-                        autism community. We believe in the power of connection, support, and education to make a
-                        meaningful difference.
-                    </p>
-                    <h3 class="text-2xl font-semibold text-primary mt-8 mb-4">Our Mission</h3>
-                    <p>
-                        Our mission is twofold:
-                    </p>
-                    <ul class="list-disc pl-6 space-y-2">
-                        <li>To provide children with autism spectrum disorder (ASD) with dedicated mentors who support
-                            their social, educational, and personal growth.</li>
-                        <li>To offer University of Toronto students invaluable volunteer experience, fostering empathy,
-                            leadership, and a deep understanding of neurodiversity.</li>
-                    </ul>
-                    <h3 class="text-2xl font-semibold text-primary mt-8 mb-4">Our Vision</h3>
-                    <p>
-                        We envision a community where every child with autism has the opportunity to thrive, supported
-                        by a network of compassionate and dedicated individuals. We strive to create an inclusive
-                        environment at UofT and beyond, where neurodiversity is celebrated.
-                    </p>
-                    <h3 class="text-2xl font-semibold text-primary mt-8 mb-4">Meet the Team</h3>
-                    <p>
-                        Our executive team is composed of passionate students from diverse faculties, all united by a
-                        common goal. (A future section here could include photos and bios of the exec team).
-                    </p>
+                <!-- Member Profiles Grid -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-12">
+                    <!-- Profile Card 1 -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg p-8 text-center transition-transform duration-300 hover:-translate-y-2">
+                        <img class="w-40 h-40 rounded-full mx-auto mb-6 object-cover border-4 border-accent2"
+                            src="https://placehold.co/200x200/91a291/edf3ed?text=Profile" alt="Profile picture">
+                        <h4 class="text-2xl font-bold text-primary mb-1">Jane Doe</h4>
+                        <p class="text-accent4 font-semibold text-lg mb-4">President</p>
+                        <p class="text-text-secondary leading-relaxed">Leads the club's overall strategy and
+                            operations. Passionate about community building.</p>
+                    </div>
+                    <!-- Profile Card 2 -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg p-8 text-center transition-transform duration-300 hover:-translate-y-2">
+                        <img class="w-40 h-40 rounded-full mx-auto mb-6 object-cover border-4 border-accent2"
+                            src="https://placehold.co/200x200/7c8c74/edf3ed?text=Profile" alt="Profile picture">
+                        <h4 class="text-2xl font-bold text-primary mb-1">John Smith</h4>
+                        <p class="text-accent4 font-semibold text-lg mb-4">VP Mentorship</p>
+                        <p class="text-text-secondary leading-relaxed">Manages mentor recruitment, training, and
+                            matching with families.</p>
+                    </div>
+                    <!-- Profile Card 3 -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg p-8 text-center transition-transform duration-300 hover:-translate-y-2">
+                        <img class="w-40 h-40 rounded-full mx-auto mb-6 object-cover border-4 border-accent2"
+                            src="https://placehold.co/200x200/b4c2b4/476349?text=Profile" alt="Profile picture">
+                        <h4 class="text-2xl font-bold text-primary mb-1">Alex Chen</h4>
+                        <p class="text-accent4 font-semibold text-lg mb-4">VP Events</p>
+                        <p class="text-text-secondary leading-relaxed">Organizes all our fun and inclusive events for
+                            mentors and children.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -436,100 +434,127 @@
         <section id="page-mentor-register" class="section hidden">
             <div class="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-xl">
                 <h2 class="text-3xl font-bold text-primary mb-6 text-center">Become a Mentor</h2>
-                <p class="text-center text-primary mb-8">
-                    We're excited to have you join our team! Please fill out the form below to get started. All mentors
-                    must complete a screening and training process.
-                </p>
+                <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-8">
+                    <p class="text-sm text-red-700">
+                        <strong>Note:</strong> We recruit mentors from <strong>April 2026 - Sept 2026</strong> for the
+                        2026-27 school year. Applications submitted after Oct 2026 will be considered for the 2027-28
+                        cycle.
+                    </p>
+                </div>
+
                 <form id="mentor-reg-form" class="space-y-10">
-
                     <fieldset>
-                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Personal
-                            Information</legend>
-                        <div class="space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="mentor-first-name" class="form-label">First Name</label>
-                                    <input type="text" id="mentor-first-name" class="form-input" required>
-                                </div>
-                                <div>
-                                    <label for="mentor-last-name" class="form-label">Last Name</label>
-                                    <input type="text" id="mentor-last-name" class="form-input" required>
-                                </div>
+                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Your Info
+                        </legend>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div><label class="form-label">First Name <span class="text-red-500">*</span></label><input
+                                    type="text" class="form-input" required></div>
+                            <div><label class="form-label">Last Name <span class="text-red-500">*</span></label><input
+                                    type="text" class="form-input" required></div>
+                            <div>
+                                <label class="form-label">UofT Email Address <span class="text-red-500">*</span></label>
+                                <input type="email" class="form-input" placeholder="name@mail.utoronto.ca" required>
+                                <p class="text-xs text-text-secondary mt-1">We only communicate via official university
+                                    email.</p>
+                            </div>
+                            <div><label class="form-label">Phone Number <span
+                                        class="text-red-500">*</span></label><input type="tel" class="form-input"
+                                    required></div>
+
+                            <!-- New Fields: Gender and Age -->
+                            <div>
+                                <label class="form-label">Gender <span class="text-red-500">*</span></label>
+                                <select class="form-input" required>
+                                    <option value="">Select...</option>
+                                    <option value="female">Female</option>
+                                    <option value="male">Male</option>
+                                    <option value="non-binary">Non-binary</option>
+                                    <option value="prefer-not-to-say">Prefer not to say</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">Age <span class="text-red-500">*</span></label>
+                                <input type="number" class="form-input" min="16" required>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="mentor-age" class="form-label">Age</label>
-                                    <input type="number" id="mentor-age" class="form-input" min="18" max="99" required>
-                                </div>
-                                <div>
-                                    <label for="mentor-gender" class="form-label">Gender</label>
-                                    <select id="mentor-gender" class="form-input">
-                                        <option value="">Select...</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="non-binary">Non-binary</option>
-                                        <option value="prefer-not-to-say">Prefer not to say</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
+                            <!-- New Fields: Program and Year of Study -->
+                            <div>
+                                <label class="form-label">Program of Study <span class="text-red-500">*</span></label>
+                                <input type="text" class="form-input" placeholder="e.g. Psychology, Engineering"
+                                    required>
                             </div>
                             <div>
-                                <label for="mentor-phone" class="form-label">Phone Number</label>
-                                <input type="tel" id="mentor-phone" class="form-input" required>
+                                <label class="form-label">Year of Study <span class="text-red-500">*</span></label>
+                                <select class="form-input" required>
+                                    <option value="">Select...</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5+">5+</option>
+                                </select>
                             </div>
-                            <div>
-                                <label for="mentor-personal-email" class="form-label">Personal Email Address</label>
-                                <input type="email" id="mentor-personal-email" class="form-input"
-                                    placeholder="you@example.com" required>
-                            </div>
-                            <div>
-                                <label for="mentor-address" class="form-label">Address</label>
-                                <input type="text" id="mentor-address" class="form-input" required>
-                            </div>
-                        </div>
-                    </fieldset>
 
-
-                    <fieldset>
-                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">University
-                            Information</legend>
-                        <div class="space-y-6">
-                            <div>
-                                <label for="mentor-email" class="form-label">UofT Email Address</label>
-                                <input type="email" id="mentor-email" class="form-input"
-                                    placeholder="name@mail.utoronto.ca" required>
-                            </div>
-                            <div>
-                                <label for="mentor-student-id" class="form-label">Student Number</label>
-                                <input type="text" id="mentor-student-id" class="form-input" required>
-                            </div>
-                            <div>
-                                <label for="mentor-program" class="form-label">Program of Study & Year</label>
-                                <input type="text" id="mentor-program" class="form-input"
-                                    placeholder="e.g., Psychology, 2nd Year" required>
+                            <div class="md:col-span-2">
+                                <label class="form-label">Address (Closest Subway Station) <span
+                                        class="text-red-500">*</span></label>
+                                <p class="text-xs text-text-secondary mb-2">To help us pair you with a family nearby.
+                                </p>
+                                <!-- Replaced native Select with Custom Dropdown Container -->
+                                <div id="mentor-subway-container" class="relative"></div>
                             </div>
                         </div>
                     </fieldset>
 
                     <fieldset>
-                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Motivation
-                            & Documents</legend>
+                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Matching
+                            Preferences</legend>
                         <div class="space-y-6">
                             <div>
-                                <label for="mentor-why" class="form-label">Why do you want to be a mentor?</label>
-                                <textarea id="mentor-why" rows="4" class="form-input"
-                                    placeholder="Tell us a bit about your motivation..." required></textarea>
+                                <label class="form-label">Preferred Age Group</label>
+                                <select class="form-input">
+                                    <option value="no-preference">No Preference</option>
+                                    <option value="4-8">4 - 8 years old</option>
+                                    <option value="9-12">9 - 12 years old</option>
+                                    <option value="13-17">13 - 17 years old</option>
+                                </select>
                             </div>
+
                             <div>
-                                <label for="mentor-resume" class="form-label">Upload Resume (PDF)</label>
-                                <input type="file" id="mentor-resume" class="form-input" accept=".pdf">
+                                <label class="form-label">Relevant Experience (Check all that apply)</label>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" class="rounded text-primary focus:ring-primary">
+                                        <span>Previous mentorship experience</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" class="rounded text-primary focus:ring-primary">
+                                        <span>Worked with non-verbal children</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" class="rounded text-primary focus:ring-primary">
+                                        <span>First Aid / CPR Certified</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" class="rounded text-primary focus:ring-primary">
+                                        <span>Studying Psychology/Education</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-gray-50 rounded-lg">
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox"
+                                        class="h-5 w-5 text-primary border-gray-300 rounded focus:ring-primary">
+                                    <span class="text-text-secondary font-medium">I am comfortable conducting sessions
+                                        at the family's home (with guardian present).</span>
+                                </label>
                             </div>
                         </div>
                     </fieldset>
-                    <div class="pt-4">
-                        <button type="submit" class="btn btn-primary w-full">Submit Application</button>
-                    </div>
+
+                    <button type="submit" class="btn btn-primary w-full">Submit Application</button>
                 </form>
             </div>
         </section>
@@ -544,160 +569,84 @@
                     steps, including our matching process.
                 </p>
                 <form id="parent-reg-form" class="space-y-10">
-
-                    <!-- Parent/Guardian Information -->
                     <fieldset>
-                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Your
+                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Family
                             Information</legend>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="parent-first-name" class="form-label">Parent/Guardian First Name</label>
-                                <input type="text" id="parent-first-name" class="form-input" required>
-                            </div>
-                            <div>
-                                <label for="parent-last-name" class="form-label">Parent/Guardian Last Name</label>
-                                <input type="text" id="parent-last-name" class="form-input" required>
-                            </div>
-                            <div>
-                                <label for="parent-relation" class="form-label">Relation to Child</label>
-                                <input type="text" id="parent-relation" class="form-input"
-                                    placeholder="e.g., Mother, Father, Guardian" required>
-                            </div>
-                            <div>
-                                <label for="parent-phone" class="form-label">Phone Number</label>
-                                <input type="tel" id="parent-phone" class="form-input" required>
-                            </div>
+                            <div><label class="form-label">Parent First Name <span
+                                        class="text-red-500">*</span></label><input type="text" class="form-input"
+                                    required></div>
+                            <div><label class="form-label">Parent Last Name <span
+                                        class="text-red-500">*</span></label><input type="text" class="form-input"
+                                    required></div>
+                            <div><label class="form-label">Phone Number <span
+                                        class="text-red-500">*</span></label><input type="tel" class="form-input"
+                                    required></div>
+                            <div><label class="form-label">Email Address <span
+                                        class="text-red-500">*</span></label><input type="email" class="form-input"
+                                    required></div>
+
                             <div class="md:col-span-2">
-                                <label for="parent-email" class="form-label">Email Address</label>
-                                <input type="email" id="parent-email" class="form-input" required>
-                            </div>
-                            <div class="md:col-span-2">
-                                <label for="parent-address" class="form-label">Address</label>
-                                <input type="text" id="parent-address" class="form-input" required>
-                            </div>
-                            <div>
-                                <label for="parent-location" class="form-label">City/Location</label>
-                                <input type="text" id="parent-location" class="form-input" placeholder="e.g., Toronto"
-                                    required>
-                            </div>
-                            <div>
-                                <label for="parent-zip" class="form-label">Zip/Postal Code</label>
-                                <input type="text" id="parent-zip" class="form-input" required>
+                                <label class="form-label">Closest Subway Station <span
+                                        class="text-red-500">*</span></label>
+                                <!-- Replaced native Select with Custom Dropdown Container -->
+                                <div id="parent-subway-container" class="relative"></div>
                             </div>
                         </div>
                     </fieldset>
 
-                    <!-- Emergency Contact Information -->
-                    <fieldset>
-                        <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Emergency
-                            Contact</legend>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="emergency-first-name" class="form-label">First Name</label>
-                                <input type="text" id="emergency-first-name" class="form-input" required>
-                            </div>
-                            <div>
-                                <label for="emergency-last-name" class="form-label">Last Name</label>
-                                <input type="text" id="emergency-last-name" class="form-input" required>
-                            </div>
-                            <div>
-                                <label for="emergency-relation" class="form-label">Relation to Child</label>
-                                <input type="text" id="emergency-relation" class="form-input"
-                                    placeholder="e.g., Grandparent, Friend" required>
-                            </div>
-                            <div>
-                                <label for="emergency-phone" class="form-label">Phone Number</label>
-                                <input type="tel" id="emergency-phone" class="form-input" required>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <!-- Child's Information -->
                     <fieldset>
                         <legend class="text-2xl font-semibold text-primary mb-5 border-b border-accent1 pb-2">Child's
-                            Information</legend>
+                            Profile</legend>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="child-first-name" class="form-label">First Name</label>
-                                <input type="text" id="child-first-name" class="form-input" required>
-                            </div>
-                            <div>
-                                <label for="child-last-name" class="form-label">Last Name</label>
-                                <input type="text" id="child-last-name" class="form-input" required>
-                            </div>
-                            <div>
-                                <label for="child-gender" class="form-label">Gender</label>
-                                <select id="child-gender" class="form-input">
+                            <div><label class="form-label">Child First Name <span
+                                        class="text-red-500">*</span></label><input type="text" class="form-input"
+                                    required></div>
+                            <div><label class="form-label">Child Last Name <span
+                                        class="text-red-500">*</span></label><input type="text" class="form-input"
+                                    required></div>
+                            <div><label class="form-label">Gender <span class="text-red-500">*</span></label><select
+                                    class="form-input" required>
                                     <option value="">Select...</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                     <option value="non-binary">Non-binary</option>
-                                    <option value="prefer-not-to-say">Prefer not to say</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="child-age" class="form-label">Age</label>
-                                <input type="number" id="child-age" class="form-input" min="1" required>
-                            </div>
-                            <div>
-                                <label for="child-school" class="form-label">School</label>
-                                <input type="text" id="child-school" class="form-input">
-                            </div>
-                            <div>
-                                <label for="child-grade" class="form-label">Grade</label>
-                                <input type="text" id="child-grade" class="form-input">
-                            </div>
+                                </select></div>
+                            <div><label class="form-label">Age <span class="text-red-500">*</span></label><input
+                                    type="number" class="form-input" min="1" required></div>
+
                             <div class="md:col-span-2">
-                                <label for="child-diagnosis" class="form-label">Diagnosis (if any)</label>
-                                <input type="text" id="child-diagnosis" class="form-input"
-                                    placeholder="e.g., Autism Spectrum Disorder, ASD Level 1, etc.">
+                                <label class="form-label">Diagnosis <span class="text-red-500">*</span></label>
+                                <input type="text" class="form-input" placeholder="e.g., ASD Level 1" required>
                             </div>
 
                             <div class="md:col-span-2">
-                                <label class="form-label">Does your child attend a special program for school?</label>
-                                <div class="flex items-center space-x-6 mt-2">
-                                    <label class="flex items-center">
-                                        <input type="radio" name="special-program" value="yes"
-                                            class="text-primary focus:ring-primary">
-                                        <span class="ml-2 text-text-secondary">Yes</span>
+                                <label class="form-label">Describe your child's interests & hobbies</label>
+                                <textarea rows="3" class="form-input"
+                                    placeholder="e.g., Loves trains, Minecraft, drawing dinosaurs..."></textarea>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label class="form-label">Meeting Preferences (Check all that apply) <span
+                                        class="text-red-500">*</span></label>
+                                <div class="mt-2 space-y-2">
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" class="rounded text-primary focus:ring-primary">
+                                        <span>Available to meet in public libraries</span>
                                     </label>
-                                    <label class="flex items-center">
-                                        <input type="radio" name="special-program" value="no"
-                                            class="text-primary focus:ring-primary" checked>
-                                        <span class="ml-2 text-text-secondary">No</span>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" class="rounded text-primary focus:ring-primary">
+                                        <span>Available to meet at UofT spaces</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" class="rounded text-primary focus:ring-primary">
+                                        <span>Prefer at-home sessions</span>
                                     </label>
                                 </div>
                             </div>
-
-                            <div class="md:col-span-2">
-                                <label for="child-educational-needs" class="form-label">Describe your child's
-                                    educational needs</label>
-                                <textarea id="child-educational-needs" rows="4" class="form-input"
-                                    placeholder="e.g., Needs help with reading comprehension, math homework, organizational skills..."></textarea>
-                            </div>
-
-                            <div class="md:col-span-2">
-                                <label for="child-behavioural-needs" class="form-label">Describe your child's
-                                    behavioural needs</label>
-                                <textarea id="child-behavioural-needs" rows="4" class="form-input"
-                                    placeholder="e.g., May need quiet breaks, benefits from clear instructions, sensory sensitivities..."></textarea>
-                            </div>
-
-                            <div class="md:col-span-2">
-                                <label for="supporting-documents" class="form-label">Upload Supporting Documents
-                                    (Optional)</label>
-                                <input type="file" id="supporting-documents" class="form-input"
-                                    accept=".pdf,.doc,.docx,.jpg,.png" multiple>
-                                <p class="text-xs text-text-secondary mt-1">You can upload diagnostic reports, IEPs, or
-                                    any other relevant documents.</p>
-                            </div>
                         </div>
                     </fieldset>
-
-                    <div class="pt-4">
-                        <button type="submit" class="btn btn-secondary w-full">Submit Registration</button>
-                    </div>
+                    <button type="submit" class="btn btn-secondary w-full">Submit Registration</button>
                 </form>
             </div>
         </section>
@@ -826,6 +775,78 @@
             const loginTabs = document.querySelectorAll('.login-tab-trigger');
             const loginForms = document.querySelectorAll('.login-form');
 
+            // --- Custom Dropdown Logic ---
+            const subwayStations = [
+                "Finch", "North York Centre", "Sheppard–Yonge", "York Mills", "Lawrence", "Eglinton", "Davisville",
+                "St. Clair", "Summerhill", "Rosedale", "Bloor–Yonge", "Wellesley", "College", "TMU", "Dundas",
+                "Queen", "King", "Union", "St. Andrew", "Osgoode", "St. Patrick", "Queen's Park", "Museum",
+                "St. George", "Spadina", "Dupont", "St. Clair West", "Cedarvale", "Glencairn", "Lawrence West",
+                "Yorkdale", "Wilson", "Sheppard West", "Downsview Park", "Finch West", "York University",
+                "Pioneer Village", "Highway 407", "Vaughan", "Kipling", "Islington", "Royal York", "Old Mill",
+                "Jane", "Runnymede", "High Park", "Keele", "Dundas West", "Lansdowne", "Dufferin", "Ossington",
+                "Christie", "Bathurst", "Bay", "Sherbourne", "Castle Frank", "Broadview", "Chester", "Pape",
+                "Donlands", "Greenwood", "Coxwell", "Woodbine", "Main Street", "Victoria Park", "Warden",
+                "Kennedy", "Bayview", "Bessarion", "Leslie", "Don Mills"
+            ];
+
+            function setupCustomDropdown(containerId, inputId) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                // Create Input
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-input cursor-pointer caret-transparent bg-white';
+                input.placeholder = 'Select Closest Subway Station...';
+                input.required = true;
+                input.readOnly = true;
+                input.id = inputId;
+                input.name = inputId;
+
+                // Create Dropdown List
+                const list = document.createElement('div');
+                list.className = 'hidden absolute z-10 w-full bg-white border border-primary rounded-md shadow-lg max-h-40 overflow-y-auto mt-1 custom-scrollbar';
+
+                // Add Options
+                subwayStations.forEach(station => {
+                    const option = document.createElement('div');
+                    option.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-secondary';
+                    option.textContent = station;
+                    option.addEventListener('click', () => {
+                        input.value = station;
+                        list.classList.add('hidden');
+                    });
+                    list.appendChild(option);
+                });
+
+                // Toggle Logic
+                input.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Close others
+                    document.querySelectorAll('.custom-dropdown-list').forEach(l => {
+                        if (l !== list) l.classList.add('hidden');
+                    });
+                    list.classList.toggle('hidden');
+                });
+
+                // Close on click outside
+                document.addEventListener('click', (e) => {
+                    if (!container.contains(e.target)) {
+                        list.classList.add('hidden');
+                    }
+                });
+
+                list.classList.add('custom-dropdown-list');
+
+                container.appendChild(input);
+                container.appendChild(list);
+            }
+
+            // Initialize Custom Dropdowns
+            setupCustomDropdown('mentor-subway-container', 'mentor-subway');
+            setupCustomDropdown('parent-subway-container', 'parent-subway');
+
+
             // --- Page Navigation Logic ---
             function showPage(pageId, targetHash = null) {
                 // Hide all pages
@@ -926,6 +947,10 @@
                     // Using alert as a placeholder for a modal
                     alert('Thank you for registering! We will be in touch soon.');
                     e.target.reset(); // Clear the form
+                    // Manually clear custom inputs since reset() won't affect them automatically in this setup
+                    if (document.getElementById('mentor-subway')) document.getElementById('mentor-subway').value = '';
+                    if (document.getElementById('parent-subway')) document.getElementById('parent-subway').value = '';
+
                     showPage('home'); // Go back to home after registration
                 }
 
